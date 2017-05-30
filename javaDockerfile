@@ -1,0 +1,43 @@
+FROM ubuntu:14.04
+
+RUN sudo apt-get update -y
+
+RUN sudo apt-get install -y wget
+RUN sudo apt-get install -y tar
+RUN sudo apt-get install -y git-all
+
+RUN sudo apt-get install -y libgtk2.0
+RUN sudo apt-get install -y mesa-utils
+RUN sudo apt-get install -y libXtst6
+
+#RUN sudo apt-get install -y default-jre
+#RUN sudo apt-get install -y default-jdk
+
+#RUN sudo add-apt-repository ppa:webupd8team/java
+RUN sudo apt-get update
+
+#RUN sudo apt-get install -y oracle-java8-installer
+RUN wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+RUN tar zxvf jdk-8u131-linux-x64.tar.gz
+RUN update-alternatives --install /usr/bin/java java /jdk1.8.0_131/bin/java 100
+RUN update-alternatives --install /usr/bin/javac javac /jdk1.8.0_131/bin/javac 1
+#RUN update-alternatives --config java
+#RUN update-alternatives --config javac
+RUN java -version
+
+#RUN sudo apt-get install -y openjdk-8-jdk
+RUN javac -version
+
+ADD javaapp.java /javaapp/
+RUN javac /javaapp/javaapp.java
+
+ADD javaapp.class /javaapp
+RUN sudo chmod 777 /javaapp/javaapp.class
+#RUN sudo chown ubuntu /javaapp/javaapp.class
+RUN java /javaapp/javaapp
+
+#ADD run.sh javaapp/run.sh
+
+EXPOSE 5000
+
+#CMD ["/bin/bash" , "javaapp/run.sh"]
