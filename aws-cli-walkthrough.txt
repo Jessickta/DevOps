@@ -1,12 +1,5 @@
-"GroupName": "JessSG0206"
-"GroupId": "sg-3c2b4755"
+Code to download and use AWS CLI on Linux to create and instance using ec2, including security group, rule and key pair.
 
-"KeyName": "JessKeys",
-"KeyFingerprint": "6c:3f:69:e5:69:2f:53:07:9e:c9:f9:48:06:c4:ad:21:f0:36:07:2b"
-
-
-
-Code
 
 To download AWS CLI:
 
