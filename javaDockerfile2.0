@@ -1,4 +1,4 @@
-#This Dockerfile installs java within the container so a program can be run from the command line.
+#This Dockerfile installs java within a container. When this container is running, the java program "javaapp.java" can be compiled and run from the command line.
 #Attempted to compile & run the java program within the Dockerfile but could not get this to work.
 
 FROM ubuntu:14.04
