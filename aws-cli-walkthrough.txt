@@ -1,0 +1,63 @@
+Code to download and use AWS CLI on Linux to create and instance using ec2, including security group, rule and key pair.
+
+
+To download AWS CLI:
+
+$ sudo apt-get update
+$ sudo apt install awscli
+
+
+To set up/configure aws:
+
+$ aws configure
+
+It will ask for Access Key ID (in spreadsheet)
+ Secret Access Key (in spreadsheet)
+ Default region name (eu-west-2)
+ Default output format (json)
+
+
+To create a security group:
+
+$ aws ec2 create-security-group --group-name MySecurityGroup --description "My Security Group" --vpc-id vpc-dbd86eb2
+
+The vpc-id is the Academy one, found on the instances page.
+Once this command has run, it will give you the group-id of the security group (here it is sg-3c2b4755).
+
+
+To add a rule to the security group:
+
+$ aws ec2 authorize-security-group-ingress --group-id sg-3c2b4755 --protocol tcp --port 22 --cidr 164.39.75.108/24
+
+The cidr is your public ip address found via eg. Whatsmyip.com, with /24 at the end because that's the rules!
+To view the information contained in the security group:
+
+$ aws ec2 describe-security-groups --group-ids sg-3c2b4755
+
+
+To create a key pair:
+
+$ aws ec2 create-key-pair --key-name JessKeys --query 'KeyMaterial' --output text > JessKeys.pem
+
+This saves the key to a .pem file. To use the keys to SSH into an instance these keys are linked to you'll have to save it somewhere convenient and convert it to a .ppk file.
+To give only yourself access:
+
+$ sudo chmod 400 JessKeys.pem
+
+To view the key pair info:
+
+$ aws ec2 describe-key-pairs --key-name JessKeys
+
+This will give you the key fingerprint and key name.
+
+
+To create an instance using the secuirty group and key pair you just created:
+
+$ aws ec2 run-instances --image-id ami-f1d7c395 --count 1 --instance-type t2.micro --key-name JessKeys --security-group-ids sg-3c2b4755 --subnet-id subnet-7d578c06
+
+The image-id is an ami number, which you can search for in the console or find via the "Launch Instance" page on ec2.
+The subnet-id is the id of the subnet within the vpc group. This can be found through the console or on the "Instances" page on ec2.
+Once this command has run, an instance within the vpc group will be initiallised and its information will be printed within the console.
+You can SSH into this instance using PuTTY: The ip can be found via the console or from the "Instances" page on ec2, and the key pair will be the .ppk key you have saved in the convenient place ;).
+
+Woo done!
