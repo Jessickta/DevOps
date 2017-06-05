@@ -1,3 +1,6 @@
+#This Dockerfile installs java within the container so a program can be run from the command line.
+#Attempted to compile & run the java program within the Dockerfile but could not get this to work.
+
 FROM ubuntu:14.04
 
 RUN sudo apt-get update
@@ -39,3 +42,7 @@ EXPOSE 5000
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 RUN export JAVA_HOME
+
+#To run java program from command line:
+#$ javac javaapp.java
+#$ java javaapp
