@@ -1,0 +1,38 @@
+#Code to create a bucket in S3 using Windows CMD.
+
+#First, aws cli needs to be downloaded and running on Windows.
+#Download aws cli for Windows from the aws website. Run this executable file then start the CMD.
+#To check it has installed properly, run:
+aws --version
+
+#Configure the aws cli as you would in Linux:
+aws configure
+
+#To create a bucket:
+aws s3 mb s3://jessick
+
+#This should output;
+make_bucket: jessick
+
+#To add a file to the bucket, navigate to the file directory, then run:
+aws s3 cp aws-cli-walkthrough.txt s3://jessick/
+
+#You can look in the bucket on s3 online to check that this has worked.
+
+#As you can see, the commands we use to deal with files here are very similar/the same as those in Unix.
+#Here are some other examples of commands and what they do:
+
+#Move all .jpg files in s3://my-bucket/path to ./MyDirectory
+aws s3 mv s3://my-bucket/path ./MyDirectory --exclude '*' --include '*.jpg' --recursive
+
+#List the contents of my-bucket
+aws s3 ls s3://my-bucket
+
+#List the contents of path in my-bucket
+aws s3 ls s3://my-bucket/path
+
+#Delete s3://my-bucket/path/MyFile.txt
+aws s3 rm s3://my-bucket/path/MyFile.txt
+
+#Delete s3://my-bucket/path and all of its contents
+aws s3 rm s3://my-bucket/path --recursive
