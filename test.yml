@@ -1,129 +1,69 @@
 ---
 
 - name: install java
-
   hosts: all
-
   remote_user: vagrant
-
   sudo: yes
 
-
   tasks:
-
     - name: Install updates
-
       apt: update_cache=true
-
     - name: Move tar file
-
       command: "cp /vagrant/shared/java.tar.gz /home/vagrant"
-
     - name: Open tar file
-
       command: "tar zxvf java.tar.gz"
-
     - name: Make java available
-
       command: "update-alternatives --install /usr/bin/java java /home/vagrant/jdk1.8.0_45/bin/java 100"
-
     - name: Make javac available
-
       command: "update-alternatives --install /usr/bin/javac javac /home/vagrant/jdk1.8.0_45/bin/javac 100"
 
-
 - name: Install maven
-
   hosts: all
-
   remote_user: vagrant
-
   sudo: yes
-
   tasks:
-
     - name: Move tar file
-
       command: "cp /vagrant/shared/maven.tar.gz /home/vagrant"
-
     - name: Open tar file
-
       command: "tar zxvf maven.tar.gz"
-
     - name: Make maven available
-
       command: "update-alternatives --install /usr/bin/mvn mvn /home/vagrant/apache-maven-3.3.9/bin/mvn 100"
 
-
-
 - name: Install git
-
   hosts: all
-
   remote_user: vagrant
-
   sudo: yes
 
-
   tasks:
-
     - name: Install git
-
       apt: name=git state=latest
 
-
-
 - name: Install Jenkins
-
   hosts: all
-
   remote_user: vagrant
-
   sudo: yes
-
   tasks:
-
     - name: Move deb file
-
       command: "cp /vagrant/shared/jenkins_2.1_all.deb /home/vagrant"
-
     - name: Open deb file
-
       command: "dpkg -i jenkins_2.1_all.deb"
-
     - name: Force install
-
       command: "apt-get install -y -f"
-
     - name: Install Jenkins
-
       command: "apt-get install -y jenkins"
-
     - name: Start Jenkins
-
       command: "service jenkins start"
 
-
 - name: Install Jira
-
   hosts: all
-
   remote_user: vagrant
-
   sudo: yes
-
   tasks:
-
     - name: Move bin file
-
       command: "cp /vagrant/shared/jira.bin /home/vagrant"
-
     - name: Give permissions to bin file
-
       command: "chmod a+x jira.bin"
-
     - name: Open bin file, answer questions
-
       shell: |
         ./jira.bin << EOF
         y
@@ -135,27 +75,16 @@
         i
         EOF
 
-
 - name: Install nexus
-
     - name: Move tar file
-
       command: "cp /vagrant/shared/nexus-3.0.2-02-unix.tar.gz /home/vagrant"
-
     - name: Unpack tar file
-
       command: "xvzf nexus-3.0.2-02-unix.tar.gz"
-
     - name: Create symbolic link to Nexus home folder
-
       command: ln -s nexus-3.0.2-02 nexus
-
     - name: Make the configuration executable
-
       command: sudo chmod a+x /usr/local/nexus-3.0.2-02
-
     - name: Run file and start Nexus
-
       shell: |
         ./bin/nexus console
         ./bin/nexus start
